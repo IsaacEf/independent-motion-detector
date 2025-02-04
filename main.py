@@ -34,14 +34,12 @@ def find_dist(p1, p2, p3):
     projection = np.dot(w, v) / np.dot(v, v) * v
     return np.sqrt(np.dot(w - projection, w - projection))
 
-#given old and new points, determine the FOE point. We will also return the outliers. 
-#more about how we determine if the found point is an actual FOE is explained below
+#given old and new points, determine the FOE point. 
 def ransac(good_new, good_old, img, attempts=100):
     best_foe = None
     best_count = 0
     found_outliers = set()
     found_outliers = None
-	#100 iterations are usually enough for the given images
     for attempt_number in range(attempts):
         outliers_indices = set()
         sample = np.random.randint(0, len(good_new), 2)
@@ -69,7 +67,6 @@ def ransac(good_new, good_old, img, attempts=100):
             if dist < threshold:
                 count += 1
             else:
-                # print(dist, threshold)
                 outliers_indices.add(i)
 
         if count > best_count:
@@ -79,7 +76,6 @@ def ransac(good_new, good_old, img, attempts=100):
 
     return best_foe, (len(good_new) / 5 < best_count), found_outliers
 
-#the following 2 functions are for creating the second image. Leveraging k-means
 def group_nearby_vectors(good_new, good_old, outliers, num_clusters):
     good_oldcp = good_old[list(outliers)]
     good_newcp = good_new[list(outliers)]
@@ -156,7 +152,6 @@ def draw_all(name1, name2):
 	plt.axis('off')
 	plt.show()
 
-	# Display the result with bigger size
 	plt.figure(figsize=(18, 14))
 	temp, all_pts = group_nearby_vectors(good_new, good_old, outliers, 4)
 	draw_bounding_boxes(image2, temp, all_pts)
