@@ -4,6 +4,6 @@ The goal of this project is to detect independently moving objects in a scene ca
 # How to run it
 To run this program, run the command below ensuring to use the correct two images, replacing "image1" and "image2" with the appropirate file names.
 
-'''
+'''console
 draw_all("data/image1.png", "data/image2.png")
 '''
