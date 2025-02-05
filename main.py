@@ -3,7 +3,6 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-#this is a very simple function that will calculate the line passing through p1 and p2 
 def find_line(p1, p2):
     x1, y1 = p1
     x2, y2 = p2
@@ -12,7 +11,7 @@ def find_line(p1, p2):
     c = a * x1 + b * y1
     return a, b, c
 
-#we will find the intersection of the lines defined by (p1, p2) and (p3, p4)
+#finds the intersection of the lines defined by (p1, p2) and (p3, p4)
 def find_foe(p1, p2, p3, p4):
     a1, b1, c1 = find_line(p1, p2)
     a2, b2, c2 = find_line(p3, p4)
@@ -24,7 +23,6 @@ def find_foe(p1, p2, p3, p4):
         y = (a1 * c2 - a2 * c1) / determinant
         return np.array([x, y])
 
-#find the distance between p3 and the line defined by p1 and p2
 def find_dist(p1, p2, p3):
     p1 = np.array(p1)
     p2 = np.array(p2)
@@ -34,7 +32,7 @@ def find_dist(p1, p2, p3):
     projection = np.dot(w, v) / np.dot(v, v) * v
     return np.sqrt(np.dot(w - projection, w - projection))
 
-#given old and new points, determine the FOE point. 
+#given old and new points determine the FOE point 
 def ransac(good_new, good_old, img, attempts=100):
     best_foe = None
     best_count = 0
